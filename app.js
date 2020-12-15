@@ -2,10 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 const Item = require('./models/items')
+require('dotenv').config()
 
 app.use(express.urlencoded({ extended : true}));
 
-const mongodb = 'mongodb+srv://ckmobile:ckmobile123@cluster0.xthyb.mongodb.net/item-database?retryWrites=true&w=majority'
+const mongodb = process.env.DB_SERVER
 mongoose.connect(mongodb, { useNewUrlParser : true, useUnifiedTopology : true})
 	.then(() => {		
 		console.log('connected')
@@ -59,6 +60,32 @@ app.get('/add-item', (req,res) => {
 	res.render('add-item')
 })
 
+
+app.get('/items/:id',(req, res) => {	
+	const id = req.params.id;
+	Item.findById(id).then(result => {
+		console.log("result" , result)
+		res.render('item-detail',{ item : result})
+	})
+})
+
+app.delete('/items/:id',(req, res) => {	
+	const id = req.params.id;
+	Item.findByIdAndDelete(id).then(result => {
+		res.json({redirect : '/get-items'})
+	}).catch(err => {
+		console.log(err)
+	})
+})
+
+app.put('/items/:id',(req, res) => {	
+	const id = req.params.id;
+	Item.findByIdAndUpdate(id, req.body).then(result => {
+		res.json({msg : 'Update Successfully'})
+	}).catch(err => {
+		console.log(err)
+	})
+})
 
 app.post('/items',(req, res) => {	
 	console.log(req.body)

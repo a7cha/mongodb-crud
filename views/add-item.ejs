@@ -14,11 +14,12 @@
 				<div class="input-field col s6">
 					<i class="material-icons prefix">add_shopping_cart</i>
 					<input id="item_name" type="text" class="validate" name="name" placeholder="input name">
-					
+					<label for="icon_prefix">Input Name</label>
 				</div>
 				<div class="input-field col s6">
 					<i class="material-icons prefix">request_quote</i>
-					<input id="price" type="tel" class="validate" name="price" placeholder="input price">
+					<input id="price" type="number" class="validate" name="price">
+          			<label for="icon_prefix">Input Price</label>
 					
 				</div>
 			</div>
@@ -26,6 +27,13 @@
 		</form>
 	</div>        	
 	</div>  
-        
+
+	<%- include('./partials/script.ejs') %>	        
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function(event) { 
+		 	M.updateTextFields();
+		});	  
+	</script>
 </body>
 </html>

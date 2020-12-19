@@ -20,7 +20,7 @@
 								<%= item.name%> $<%= item.price%>
 								</a>								
 								<a href="#!" class="secondary-content">
-									<i class="material-icons" data-id="<%= item._id %>">delete</i>
+									<i id="deleteBtn" class="material-icons" data-id="<%= item._id %>">delete</i>
 									<i class="material-icons modal-trigger" href="#edit_item_modal" data-id="<%= item._id %>" >edit</i>
 								</a>
 							</div>
@@ -74,7 +74,7 @@
 			edit_form.reset();
 			window.location.reload();
 			alert(result.msg)
-		}
+		} 			
 
 	  	itemContainer.onclick = function(e) {
 	  	// console.log('e.target.textContent', e.target.textContent)
@@ -83,19 +83,23 @@
 		  		console.log(updateId)
 		  	}
 
+		  	
 		  	if(e.target.textContent === 'delete'){
 		  		const id = e.target.getAttribute('data-id');
 		  		console.log(id)
 		  		const endpoint = `/items/${id}`;
 		  		fetch(endpoint, {
-		  			method : 'DELTE'
+		  			method : 'DELETE'
 		  		}).then(res => res.json())
 		  			.then(data => {
 		  				console.log('data', data)
 	                    window.location.href = data.redirect	  				
 		  			}).catch(err => console.log(err))
 		  	}
+		  
 	  	}		
+
+
 	</script>
         
 </body>
